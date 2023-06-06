@@ -1,0 +1,16 @@
+body {
+  background-color: bisque;
+}
+
+[contenteditable='true'] {
+  width: 30%;
+}
+
+[contenteditable='true'] br {
+  display: none;
+}
+
+[contenteditable='true'] * {
+  display: inline;
+  white-space: nowrap;
+}
