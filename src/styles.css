@@ -1,5 +1,5 @@
 body {
-  background-color: bisque;
+  background-color: #f6f6f6;
 }
 
 [contenteditable='true'] {
@@ -13,4 +13,13 @@ body {
 [contenteditable='true'] * {
   display: inline;
   white-space: nowrap;
+}
+
+.container {
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+h1 {
+  border-bottom: 2px solid rgb(209, 208, 208);
 }
