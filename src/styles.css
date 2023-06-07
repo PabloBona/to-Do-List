@@ -16,10 +16,65 @@ body {
 }
 
 .container {
-  max-width: 70%;
   margin: 0 auto;
+  background-color: #fff;
+  max-width: 500px;
+  box-shadow: 0 11px 25px 0 rgba(0, 0, 0, 0.3);
 }
 
-h1 {
-  border-bottom: 2px solid rgb(209, 208, 208);
+.container > div {
+  padding: 0 0.8rem;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  border: none;
+  padding: 1rem 0;
+}
+
+ul {
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  border-top: 1px solid rgb(209, 208, 208);
+}
+
+.todoTitle {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(209, 208, 208);
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formContainer input {
+  flex-grow: 1;
+}
+
+#show-task li {
+  display: flex;
+}
+
+#show-task li p {
+  flex-grow: 1;
+  margin-left: 1rem;
+}
+
+.clear-btn {
+  width: 100%;
+  padding: 1rem 0;
+  background: #f6f6f6;
 }

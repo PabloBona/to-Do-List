@@ -1,19 +1,32 @@
-import _ from 'lodash';
-import printMe from './print.js';
 import './styles.css';
 
-function component() {
-  const element = document.createElement('div');
-  const btn = document.createElement('button');
+const listTask = [
+  { description: 'wash the dishes', completed: false, index: 1 },
+  { description: 'complete To Do list proyect', completed: false, index: 2 },
+];
 
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+const taskListContainer = document.querySelector('#show-task');
 
-  btn.innerHTML = 'Click me and check the console!';
-  btn.onclick = printMe;
+const createTaskEle = (task) => {
+  const listItem = document.createElement('li');
+  const checkbox = document.createElement('input');
+  const dragButton = document.createElement('button');
+  checkbox.type = 'checkbox';
+  checkbox.checked = task.completed;
+  dragButton.innerHTML = "<i class='bx bx-dots-vertical-rounded'></i>";
+  const description = document.createElement('p');
+  description.textContent = task.description;
 
-  element.appendChild(btn);
+  listItem.appendChild(checkbox);
+  listItem.appendChild(description);
+  listItem.appendChild(dragButton);
+  taskListContainer.appendChild(listItem);
+};
 
-  return element;
-}
+const createTaskList = (listTask) => {
+  listTask.forEach((task) => {
+    createTaskEle(task);
+  });
+};
 
-document.body.appendChild(component());
+createTaskList(listTask);
