@@ -26,17 +26,20 @@
           <input
             type="text"
             id="task-description"
+            required
             placeholder="Add to your list..."
           />
           <button type="submit">
-            <i class="bx bx-refresh bx-rotate-270"></i>
+            <i class="bx bx-archive-in"></i>
           </button>
         </form>
         <ul id="show-task"></ul>
       </div>
-      <button class="clear-btn" disabled type="button">
-        Clear All Completed
-      </button>
+      <div class="actions">
+        <button class="clear-btn" disabled type="button">
+          Clear All Completed
+        </button>
+      </div>
     </main>
     <!-- <script type="module" src="./index.js"></script> -->
   </body>

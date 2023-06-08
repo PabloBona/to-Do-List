@@ -1,32 +1,72 @@
+import List from './list.js';
 import './styles.css';
+import removeTask from './removeTask.js';
 
-const listTask = [
-  { description: 'wash the dishes', completed: false, index: 1 },
-  { description: 'complete To Do list proyect', completed: false, index: 2 },
-];
+const listTaskClass = new List();
 
+const taskInput = document.querySelector('#task-description');
 const taskListContainer = document.querySelector('#show-task');
+const addTaskForm = document.querySelector('#task-form');
 
 const createTaskEle = (task) => {
-  const listItem = document.createElement('li');
-  const checkbox = document.createElement('input');
-  const dragButton = document.createElement('button');
-  checkbox.type = 'checkbox';
-  checkbox.checked = task.completed;
-  dragButton.innerHTML = "<i class='bx bx-dots-vertical-rounded'></i>";
-  const description = document.createElement('p');
-  description.textContent = task.description;
+  const { index, description, completed } = task;
+  const li = document.createElement('li');
+  li.setAttribute('data-task-id', index);
 
-  listItem.appendChild(checkbox);
-  listItem.appendChild(description);
-  listItem.appendChild(dragButton);
-  taskListContainer.appendChild(listItem);
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = completed;
+
+  const p = document.createElement('p');
+  p.contentEditable = true;
+  p.classList.add('editable');
+  p.textContent = description;
+
+  const removeButton = document.createElement('button');
+  removeButton.innerHTML = '<i class="bx bx-trash"></i>';
+
+  const div = document.createElement('div');
+  div.classList.add('text-input');
+  div.appendChild(checkbox);
+  div.appendChild(p);
+
+  li.appendChild(div);
+  li.appendChild(removeButton);
+
+  if (completed) {
+    li.classList.add('completed');
+  }
+
+  taskListContainer.appendChild(li);
+
+  p.addEventListener('keypress', (e) => {
+    if (e.key.includes('Enter')) {
+      task.description = p.textContent;
+      listTaskClass.saveListToLocalStorage();
+      p.blur();
+    }
+  });
+
+  removeButton.addEventListener('click', () => {
+    removeTask(li, listTaskClass);
+  });
 };
 
-const createTaskList = (listTask) => {
-  listTask.forEach((task) => {
+const createTaskList = () => {
+  listTaskClass.tasks.forEach((task) => {
     createTaskEle(task);
   });
 };
 
-createTaskList(listTask);
+addTaskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const cleanValue = taskInput.value.trim();
+  if (cleanValue) {
+    const newTask = listTaskClass.addTask(taskInput.value);
+
+    addTaskForm.reset();
+    createTaskEle(newTask);
+  }
+});
+
+createTaskList();
