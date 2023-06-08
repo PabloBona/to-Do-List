@@ -1,9 +1,10 @@
 import List from './list.js';
 import './styles.css';
 import removeTask from './removeTask.js';
+import handleCheckboxChange from './checkChange.js';
 
 const listTaskClass = new List();
-
+const listTask = listTaskClass.tasks;
 const taskInput = document.querySelector('#task-description');
 const taskListContainer = document.querySelector('#show-task');
 const addTaskForm = document.querySelector('#task-form');
@@ -47,13 +48,20 @@ const createTaskEle = (task) => {
     }
   });
 
+  handleCheckboxChange(
+    checkbox,
+    task,
+    // eslint-disable-next-line comma-dangle
+    listTaskClass.saveListToLocalStorage.bind(listTaskClass)
+  );
+
   removeButton.addEventListener('click', () => {
     removeTask(li, listTaskClass);
   });
 };
 
 const createTaskList = () => {
-  listTaskClass.tasks.forEach((task) => {
+  listTask.forEach((task) => {
     createTaskEle(task);
   });
 };
@@ -69,4 +77,4 @@ addTaskForm.addEventListener('submit', (e) => {
   }
 });
 
-createTaskList();
+createTaskList(listTask);
