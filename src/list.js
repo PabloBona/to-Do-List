@@ -1,30 +1,39 @@
-export default class List {
+export default class ToDoList {
   constructor(localStorageKey = 'tasks') {
     this.localStorageKey = localStorageKey;
-    this.list = this.getList(this.localStorageKey);
+    this.tasks = this.getList(this.localStorageKey);
   }
 
-  addToList(description) {
-    const index = this.list.length + 1;
+  addTask(description) {
+    const index = this.tasks.length + 1;
     const newItem = { index, description, completed: false };
-    this.list.push(newItem);
+    this.tasks.push(newItem);
     this.saveListToLocalStorage();
 
     return newItem;
   }
 
   saveListToLocalStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.list));
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks));
+  }
+
+  // Restructuring localStorage task
+  updateIndexes() {
+    return this.tasks.map((task, i) => {
+      task.index = i + 1;
+      return task;
+    });
+  }
+
+  removeTask(taskId) {
+    const taskIdToRemove = parseInt(taskId, 10);
+    this.tasks = this.tasks.filter((task) => task.index !== taskIdToRemove);
+    this.updateIndexes();
+    this.saveListToLocalStorage();
   }
 
   getList() {
     const items = localStorage.getItem(this.localStorageKey);
     return items ? JSON.parse(items) : [];
-  }
-
-  updateIndexes() {
-    this.list.forEach((task, index) => {
-      task.index = index + 1;
-    });
   }
 }

@@ -22,7 +22,7 @@ body {
   box-shadow: 0 11px 25px 0 rgba(0, 0, 0, 0.3);
 }
 
-.container > div {
+.container > div:first-child {
   padding: 0 0.8rem;
 }
 
@@ -30,11 +30,12 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  padding: 0;
 }
 
 input {
   border: none;
-  padding: 1rem 0;
+  padding: 1rem;
 }
 
 ul {
@@ -64,17 +65,31 @@ li {
   flex-grow: 1;
 }
 
-#show-task li {
+.text-input {
+  padding-left: 1rem;
+}
+
+.text-input:hover {
+  background-color: rgb(255, 255, 179);
+}
+
+#show-task li .text-input {
   display: flex;
 }
 
-#show-task li p {
+#show-task li > div {
   flex-grow: 1;
-  margin-left: 1rem;
 }
 
 .clear-btn {
   width: 100%;
   padding: 1rem 0;
   background: #f6f6f6;
+}
+
+.text-input p {
+  min-width: 90%;
+  border: none;
+  max-height: max-content;
+  margin-left: 1rem;
 }
