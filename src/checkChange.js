@@ -1,6 +1,5 @@
-export default (checkbox, task, saveListToLocalStorage) => {
-  checkbox.addEventListener('change', () => {
-    task.completed = checkbox.checked;
-    saveListToLocalStorage();
-  });
+export default (li, task, listTaskClass) => {
+  const isCompleted = task.completed;
+  li.classList.toggle('completed', isCompleted);
+  listTaskClass.saveListToLocalStorage();
 };
