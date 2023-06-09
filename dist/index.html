@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="./styles.css"> -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <title>Document</title>
+  <script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script></head>
+  <body>
+    <!-- <h1 contenteditable="true">Hello webpack!</h1> -->
+    <main class="container">
+      <div>
+        <div class="todoTitle">
+          <h1>Today's To Do</h1>
+          <button type="button">
+            <i class="bx bx-refresh bx-rotate-270"></i>
+          </button>
+        </div>
+        <form id="task-form" class="formContainer">
+          <input
+            type="text"
+            id="task-description"
+            required
+            placeholder="Add to your list..."
+          />
+          <button type="submit">
+            <i class="bx bx-archive-in"></i>
+          </button>
+        </form>
+        <ul id="show-task"></ul>
+      </div>
+      <div class="actions">
+        <button class="clear-btn" id="clear-btn" type="button">
+          Clear All Completed
+        </button>
+      </div>
+    </main>
+    <!-- <script type="module" src="./index.js"></script> -->
+  </body>
+</html>
