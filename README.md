@@ -64,7 +64,7 @@ The following stacks were used
 
 ## 🚀 Live Demo
 
-N/A
+<a href="https://pablobona.github.io/to-Do-List/dist/index.html">Live Demo</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
