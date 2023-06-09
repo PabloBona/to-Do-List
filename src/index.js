@@ -1,6 +1,7 @@
 import List from './list.js';
 import './styles.css';
 import removeTask from './removeTask.js';
+import handleCheckboxChange from './checkChange.js';
 
 const listTaskClass = new List();
 
@@ -41,10 +42,18 @@ const createTaskEle = (task) => {
 
   p.addEventListener('keypress', (e) => {
     if (e.key.includes('Enter')) {
-      task.description = p.textContent;
-      listTaskClass.saveListToLocalStorage();
       p.blur();
     }
+  });
+
+  p.addEventListener('blur', () => {
+    task.description = p.textContent;
+    listTaskClass.saveListToLocalStorage();
+  });
+
+  checkbox.addEventListener('change', () => {
+    task.completed = checkbox.checked;
+    handleCheckboxChange(li, task, listTaskClass);
   });
 
   removeButton.addEventListener('click', () => {
@@ -63,10 +72,22 @@ addTaskForm.addEventListener('submit', (e) => {
   const cleanValue = taskInput.value.trim();
   if (cleanValue) {
     const newTask = listTaskClass.addTask(taskInput.value);
-
     addTaskForm.reset();
     createTaskEle(newTask);
   }
 });
+
+const removeAllCompleted = (e) => {
+  e.preventDefault();
+  const completedList = document.querySelectorAll('.completed');
+
+  completedList.forEach((li) => {
+    li.remove();
+  });
+  listTaskClass.filterCompleted();
+};
+
+const clearBtn = document.querySelector('#clear-btn');
+clearBtn.addEventListener('click', removeAllCompleted);
 
 createTaskList();

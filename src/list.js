@@ -9,7 +9,6 @@ export default class ToDoList {
     const newItem = { index, description, completed: false };
     this.tasks.push(newItem);
     this.saveListToLocalStorage();
-
     return newItem;
   }
 
@@ -17,7 +16,6 @@ export default class ToDoList {
     localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks));
   }
 
-  // Restructuring localStorage task
   updateIndexes() {
     return this.tasks.map((task, i) => {
       task.index = i + 1;
@@ -35,5 +33,11 @@ export default class ToDoList {
   getList() {
     const items = localStorage.getItem(this.localStorageKey);
     return items ? JSON.parse(items) : [];
+  }
+
+  filterCompleted() {
+    this.tasks = this.tasks.filter((task) => task.completed !== true);
+    this.updateIndexes();
+    this.saveListToLocalStorage();
   }
 }
