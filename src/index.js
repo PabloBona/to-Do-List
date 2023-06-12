@@ -1,3 +1,6 @@
+/* eslint-disable object-curly-newline */
+import { handleDrag, allowDrop, handleDrop, handleDragEnd } from './drag.js';
+
 import List from './list.js';
 import './styles.css';
 import removeTask from './removeTask.js';
@@ -13,6 +16,7 @@ const createTaskEle = (task) => {
   const { index, description, completed } = task;
   const li = document.createElement('li');
   li.setAttribute('data-task-id', index);
+  li.draggable = true;
 
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
@@ -91,3 +95,17 @@ const clearBtn = document.querySelector('#clear-btn');
 clearBtn.addEventListener('click', removeAllCompleted);
 
 createTaskList();
+
+const taskElements = document.querySelectorAll('li');
+
+taskElements.forEach((taskElement) => {
+  taskElement.addEventListener('dragstart', handleDrag);
+  taskElement.addEventListener('dragend', handleDragEnd);
+  taskElement.addEventListener('dragover', allowDrop);
+  taskElement.addEventListener(
+    'drop',
+    // eslint-disable-next-line comma-dangle
+    (event) => handleDrop(event, taskListContainer)
+    // eslint-disable-next-line function-paren-newline
+  );
+});
