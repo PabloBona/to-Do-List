@@ -1,6 +1,6 @@
-import List from './list.js';
+// import List from './list.js';
 
-const listTaskClass = new List();
+// const listTaskClass = new List();
 
 // Define the drag event start
 export const dragStart = (e) => {
@@ -12,6 +12,7 @@ export const dragStart = (e) => {
 };
 
 // Define the drag event end
+
 export const dragEnd = (e) => {
   // Remove the classlist
   e.currentTarget.classList.remove('dragging');
@@ -24,7 +25,7 @@ export const allowDrop = (e) => {
 
 // represent the event drop in a valid drop target
 // (when an element or text selection is dropped on a valid drop target.)
-export const handleDrop = (e) => {
+export const handleDrop = (listTaskClass, e) => {
   e.preventDefault();
 
   // Get the ID of the dragged task
@@ -62,13 +63,10 @@ export const handleDrop = (e) => {
   }
 };
 
-export const enableDragAndDrop = () => {
-  const dragLis = document.querySelectorAll('.lilist');
-  dragLis.forEach((dragLi) => {
-    dragLi.addEventListener('dragstart', dragStart);
-    dragLi.addEventListener('dragend', dragEnd);
-    dragLi.addEventListener('dragover', allowDrop);
-    dragLi.addEventListener('drop', handleDrop);
-    dragLi.setAttribute('draggable', 'true');
-  });
+export const enableDragAndDrop = (li, listTaskClass) => {
+  li.addEventListener('dragstart', dragStart);
+  li.addEventListener('dragend', dragEnd);
+  li.addEventListener('dragover', allowDrop);
+  li.addEventListener('drop', handleDrop.bind(null, listTaskClass));
+  li.setAttribute('draggable', 'true');
 };

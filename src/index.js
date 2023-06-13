@@ -61,6 +61,9 @@ const createTaskEle = (task) => {
   removeButton.addEventListener('click', () => {
     removeTask(li, listTaskClass);
   });
+
+  // Habilitar el drag and drop
+  enableDragAndDrop(li, listTaskClass);
 };
 
 const createTaskList = () => {
@@ -92,6 +95,3 @@ const removeAllCompleted = (e) => {
 clearBtn.addEventListener('click', removeAllCompleted);
 
 createTaskList();
-
-// Habilitar el drag and drop
-enableDragAndDrop();
