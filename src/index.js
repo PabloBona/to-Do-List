@@ -1,13 +1,10 @@
-/* eslint-disable object-curly-newline */
-import { handleDrag, allowDrop, handleDrop, handleDragEnd } from './drag.js';
-
 import List from './list.js';
 import './styles.css';
 import removeTask from './removeTask.js';
 import handleCheckboxChange from './checkChange.js';
 
 const listTaskClass = new List();
-
+const clearBtn = document.querySelector('#clear-btn');
 const taskInput = document.querySelector('#task-description');
 const taskListContainer = document.querySelector('#show-task');
 const addTaskForm = document.querySelector('#task-form');
@@ -17,7 +14,7 @@ const createTaskEle = (task) => {
   const li = document.createElement('li');
   li.setAttribute('data-task-id', index);
   li.draggable = true;
-
+  li.classList.add('lilist');
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.checked = completed;
@@ -91,21 +88,81 @@ const removeAllCompleted = (e) => {
   listTaskClass.filterCompleted();
 };
 
-const clearBtn = document.querySelector('#clear-btn');
 clearBtn.addEventListener('click', removeAllCompleted);
 
 createTaskList();
 
-const taskElements = document.querySelectorAll('li');
+// Define the drag event start
+const dragStart = (e) => {
+  // Add a classlist
+  e.currentTarget.classList.add('dragging');
 
-taskElements.forEach((taskElement) => {
-  taskElement.addEventListener('dragstart', handleDrag);
-  taskElement.addEventListener('dragend', handleDragEnd);
-  taskElement.addEventListener('dragover', allowDrop);
-  taskElement.addEventListener(
-    'drop',
-    // eslint-disable-next-line comma-dangle
-    (event) => handleDrop(event, taskListContainer)
-    // eslint-disable-next-line function-paren-newline
+  // Set the data type and assign a taskId to transfer
+  // (The data that is transferred during a drag and drop interaction.)
+  e.dataTransfer.setData('text/plain', e.currentTarget.dataset.taskId);
+};
+
+// Define the drag event end
+const dragEnd = (e) => {
+  // Remove the classlist
+  e.currentTarget.classList.remove('dragging');
+};
+
+// represent the drag event over a valid drop target
+const allowDrop = (e) => {
+  e.preventDefault();
+};
+
+// represent the event drop in a valid drop target
+// (when an element or text selection is dropped on a valid drop target.)
+const handleDrop = (e) => {
+  e.preventDefault();
+
+  // Get the ID of the dragged task
+  const draggedTaskId = e.dataTransfer.getData('text/plain');
+
+  // Get the dragged task
+  const draggedTask = document.querySelector(
+    `li[data-task-id="${draggedTaskId}"]`,
   );
-});
+
+  // Get the drop zone
+  const dropZone = e.currentTarget;
+
+  // Check if the dropped element is a valid drop target
+  if (dropZone !== draggedTask) {
+    // Reorder the tasks in the list
+    const taskList = Array.from(taskListContainer.querySelectorAll('li'));
+    const indexDragged = taskList.indexOf(draggedTask);
+    const indexDropZone = taskList.indexOf(dropZone);
+
+    if (indexDragged > indexDropZone) {
+      taskListContainer.insertBefore(draggedTask, dropZone);
+    } else {
+      taskListContainer.insertBefore(draggedTask, dropZone.nextSibling);
+    }
+
+    // Update the order of the tasks in the list
+    // eslint-disable-next-line prefer-destructuring
+    const tasks = listTaskClass.tasks;
+    const draggedTaskObj = tasks.find(
+      (task) => task.index === parseInt(draggedTaskId, 10),
+    );
+    tasks.splice(indexDragged, 1);
+    tasks.splice(indexDropZone, 0, draggedTaskObj);
+    listTaskClass.saveListToLocalStorage();
+  }
+};
+
+const enableDragAndDrop = () => {
+  const dragLis = document.querySelectorAll('.lilist');
+  dragLis.forEach((dragLi) => {
+    dragLi.addEventListener('dragstart', dragStart);
+    dragLi.addEventListener('dragend', dragEnd);
+    dragLi.addEventListener('dragover', allowDrop);
+    dragLi.addEventListener('drop', handleDrop);
+    dragLi.setAttribute('draggable', 'true');
+  });
+};
+
+enableDragAndDrop();

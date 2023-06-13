@@ -88,3 +88,8 @@ li {
   max-height: max-content;
   margin-left: 1rem;
 }
+
+.dragging {
+  text-align: center;
+  opacity: 0.5;
+}
