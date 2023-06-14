@@ -1,7 +1,12 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-module.exports = {
+const fileName = fileURLToPath(import.meta.url);
+
+const dirName = path.dirname(fileName);
+
+export default {
   mode: 'development',
   entry: {
     index: './src/index.js',
@@ -17,7 +22,7 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(dirName, 'dist'),
     clean: true,
   },
   optimization: {
@@ -28,6 +33,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.jsx?$/,
+        use: ['babel-loader'],
       },
     ],
   },
