@@ -44,6 +44,7 @@
     "webpack-dev-server": "^4.15.0"
   },
   "dependencies": {
+    "@jest/globals": "^29.5.0",
     "babel-loader": "^9.1.2",
     "lodash": "^4.17.21"
   },

@@ -55,5 +55,5 @@ export default function createTaskEle(task, listTaskClass, taskListContainer) {
 
   // Habilitar el drag and drop
   enableDragAndDrop(li, listTaskClass);
-  return p;
+  return li;
 }
