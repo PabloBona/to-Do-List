@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 import List from '../src/modules/list.js';
 import createTaskEle from '../src/modules/createTaskElement.js';
-// import removeTask from '../src/modules/removeTask.js';
+import removeTask from '../src/modules/removeTask.js';
 
 afterEach(() => {
   localStorage.clear();
@@ -68,5 +68,36 @@ describe('createTaskEle', () => {
     const removeButton = li.querySelector('button');
     expect(removeButton).toBeTruthy();
     expect(removeButton.innerHTML).toBe('<i class="bx bx-trash"></i>');
+  });
+
+  describe('removeTask', () => {
+    test('should remove a task from the list', () => {
+      // Arrange
+      const listClass = new List();
+      const task1 = listClass.addTask('Task 1');
+
+      // Act
+      listClass.removeTask(task1.index);
+
+      // Assert
+      expect(listClass.tasks.some((task) => task.description === 'Task 1')).toBe(false);
+    });
+  });
+
+  describe('removeTask hmtl li', () => {
+    test('should remove a task from the html', () => {
+      // Arrange
+      const listClass = new List();
+      const task1 = listClass.addTask('Task 1');
+      const taskListContainer = document.createElement('ul');
+      const li = createTaskEle(task1, listClass, taskListContainer);
+
+      // Act
+      removeTask(li, listClass);
+
+      // Assert
+      expect(listClass.tasks.some((task) => task.description === 'Task 1')).toBe(false);
+      expect(taskListContainer.querySelector('li')).toBeNull();
+    });
   });
 });
