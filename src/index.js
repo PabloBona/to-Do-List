@@ -1,8 +1,8 @@
-import List from './list.js';
-import './styles.css';
-import removeTask from './removeTask.js';
-import handleCheckboxChange from './checkChange.js';
-import { enableDragAndDrop } from './dragAndDrop.js';
+import List from './modules/list.js';
+import './css/styles.css';
+import removeTask from './modules/removeTask.js';
+import handleCheckboxChange from './modules/checkChange.js';
+import { enableDragAndDrop } from './modules/dragAndDrop.js';
 
 const listTaskClass = new List();
 const clearBtn = document.querySelector('#clear-btn');
