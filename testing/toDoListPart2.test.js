@@ -61,5 +61,24 @@ describe('removeAllCompleted', () => {
         saveListToLocalStorage: jest.fn(),
       };
     });
+    test('should update the completed status of the task and save to localStorage', () => {
+      // Arrange: Add the 'completed' class to the simulated element
+      li.classList.add('completed');
+
+      // Act: Call the updateCompletedStatus function
+      updateCompletedStatus(li, task, listTaskClass);
+
+      // Assert: Verify that the 'completed' class has been removed from the simulated element
+      expect(li.classList.contains('completed')).toBe(false);
+
+      // Assert: Update the 'completed' status of the task
+      task.completed = true;
+
+      // Assert: Verify that the 'completed' status of the task has been updated
+      expect(task.completed).toBe(true);
+
+      // Assert: Verify that saveListToLocalStorage has been called on listTaskClass
+      expect(listTaskClass.saveListToLocalStorage).toHaveBeenCalled();
+    });
   });
 });
