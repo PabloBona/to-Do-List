@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 import removeAllCompleted from '../src/modules/removeAll.js';
 import updateCompletedStatus from '../src/modules/checkChange.js';
+import editTaskDescription from '../src/modules/editTask.js';
 
 describe('removeAllCompleted', () => {
   beforeEach(() => {
@@ -61,6 +62,7 @@ describe('removeAllCompleted', () => {
         saveListToLocalStorage: jest.fn(),
       };
     });
+
     test('should update the completed status of the task and save to localStorage', () => {
       // Arrange: Add the 'completed' class to the simulated element
       li.classList.add('completed');
@@ -79,6 +81,47 @@ describe('removeAllCompleted', () => {
 
       // Assert: Verify that saveListToLocalStorage has been called on listTaskClass
       expect(listTaskClass.saveListToLocalStorage).toHaveBeenCalled();
+    });
+  });
+  describe('editTaskDescription', () => {
+    let mockListTaskClass;
+
+    beforeEach(() => {
+      mockListTaskClass = {
+        tasks: [
+          { id: 1, description: 'Task 1' },
+          { id: 2, description: 'Task 2' },
+        ],
+        saveListToLocalStorage: jest.fn(),
+      };
+    });
+
+    test('should update the description of the specified task', () => {
+      const taskId = 1;
+      const newDescription = 'Updated Task 1';
+
+      editTaskDescription(taskId, newDescription, mockListTaskClass);
+
+      expect(mockListTaskClass.tasks[0].description).toBe(newDescription);
+      expect(mockListTaskClass.saveListToLocalStorage).toHaveBeenCalled();
+    });
+
+    test('should not update the description if the task does not exist', () => {
+      const taskId = 3;
+      const newDescription = 'Updated Task 3';
+
+      editTaskDescription(taskId, newDescription, mockListTaskClass);
+
+      expect(mockListTaskClass.saveListToLocalStorage).not.toHaveBeenCalled();
+    });
+
+    test('should call saveListToLocalStorage after updating the description', () => {
+      const taskId = 2;
+      const newDescription = 'Updated Task 2';
+
+      editTaskDescription(taskId, newDescription, mockListTaskClass);
+
+      expect(mockListTaskClass.saveListToLocalStorage).toHaveBeenCalled();
     });
   });
 });
