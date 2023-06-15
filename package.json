@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "set NODE_OPTIONS=--experimental-vm-modules && npx jest --verbose",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --verbose",
     "lint": "npx hint . && npx stylelint \"**/*.{css,scss}\" && npx eslint .",
     "build": "webpack --mode=development",
     "start": "webpack serve --open"
@@ -26,6 +26,7 @@
     "@babel/preset-env": "^7.22.5",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^29.5.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
