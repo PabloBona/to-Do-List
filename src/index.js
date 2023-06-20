@@ -1,8 +1,9 @@
 import List from './modules/list.js';
 import './css/styles.css';
 import createTaskEle from './modules/createTaskElement.js';
+import removeAllCompleted from './modules/removeAll.js';
 
-const listTaskClass = new List();
+export const listTaskClass = new List();
 const clearBtn = document.querySelector('#clear-btn');
 const taskInput = document.querySelector('#task-description');
 const taskListContainer = document.querySelector('#show-task');
@@ -28,16 +29,10 @@ addTaskForm.addEventListener('submit', (e) => {
   }
 });
 
-const removeAllCompleted = (e) => {
-  e.preventDefault();
-  const completedList = document.querySelectorAll('.completed');
-
-  completedList.forEach((li) => {
-    li.remove();
-  });
-  listTaskClass.filterCompleted();
-};
-
-clearBtn.addEventListener('click', removeAllCompleted);
+clearBtn.addEventListener('click', (e) => {
+  removeAllCompleted(listTaskClass, e);
+});
 
 createTaskList();
+
+export default removeAllCompleted;

@@ -1,7 +1,3 @@
-// import List from './list.js';
-
-// const listTaskClass = new List();
-
 // Define the drag event start
 export const dragStart = (e) => {
   // Add a classlist
